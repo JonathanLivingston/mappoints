@@ -6,20 +6,29 @@ import javax.ws.rs.client.WebTarget;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.net.URI;
+
 import static org.junit.Assert.assertEquals;
 
-public class MyResourceTest {
+public class MapPointsTest {
 
     private HttpServer server;
     private WebTarget target;
 
+    private static final String BASE_URL = "http://localhost:8080";
+
     @Before
     public void setUp() throws Exception {
+        ResourceConfig rc = new ResourceConfig();
+        rc.packages("com.jl.infotex");
         // start the server
-        server = Main.startServer();
+        server = GrizzlyHttpServerFactory.createHttpServer(new URI(BASE_URL), rc);
         // create the client
         Client c = ClientBuilder.newClient();
 
@@ -29,7 +38,7 @@ public class MyResourceTest {
         // --
         // c.configuration().enable(new org.glassfish.jersey.media.json.JsonJaxbFeature());
 
-        target = c.target(Main.BASE_URI);
+        target = c.target(new URI(BASE_URL));
     }
 
     @After
@@ -42,7 +51,7 @@ public class MyResourceTest {
      */
     @Test
     public void testGetIt() {
-        String responseMsg = target.path("myresource").request().get(String.class);
+        String responseMsg = target.path("test").request().get(String.class);
         assertEquals("Got it!", responseMsg);
     }
 }
