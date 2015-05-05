@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jl.infotex.entity">
+
+    <class name="PlacemarkEntity" table="placemark">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="address" type="java.lang.String" column="address"/>
+        <property name="hint" type="java.lang.String" column="hint"/>
+        <property name="baloon" type="java.lang.String" column="baloon"/>
+        <property name="longitude" type="java.lang.Float" column="longitude"/>
+        <property name="latitude" type="java.lang.Float" column="latitude"/>
+    </class>
+
+</hibernate-mapping>

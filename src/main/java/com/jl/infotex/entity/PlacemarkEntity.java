@@ -2,6 +2,9 @@ package com.jl.infotex.entity;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 @Entity
 @Table(name = "placemark", schema = "public", catalog = "mpoints")
 public class PlacemarkEntity {
@@ -14,6 +17,7 @@ public class PlacemarkEntity {
 
     @Id
     @Column(name = "id", nullable = false, insertable = true, updatable = true)
+    @Generated(GenerationTime.INSERT)
     public int getId() {
         return id;
     }

@@ -1,9 +1,12 @@
 package com.jl.infotex.controller;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
+import com.jl.infotex.entity.PlacemarkEntity;
+import com.jl.infotex.model.Placemark;
+import com.jl.infotex.util.HibernateUtil;
+import org.hibernate.Session;
 
 /**
  * Root resource (exposed at "mappoints" path)
@@ -21,6 +24,21 @@ public class MapPoints {
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
         return "Got it!";
+    }
+
+    @POST
+    @Path("addpoint")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void addPoint(Placemark placemark) {
+        //TODO mapper
+        PlacemarkEntity entity = new PlacemarkEntity();
+        entity.setAddress(placemark.getAddress());
+        entity.setHint(placemark.getName());
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        session.save(entity);
+        session.getTransaction().commit();
     }
 
 }
